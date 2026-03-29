@@ -38,15 +38,16 @@ Renders a formatted table of your weekly opening hours.
 
 ```
 (scheduleTable:)
-(scheduleTable: showClosed: true)
+(scheduleTable: showClosed: true timeFormat: H:i)
 ```
 
 **Options**
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `layout` | — | Optional CSS class hook added as `is-layout-{value}` on the table |
+| `layout` | — | CSS class added as `is-layout-{value}` on the table element. Pass any string — no functional effect in the Free version. |
 | `showClosed` | `false` | Include days marked as closed in the output |
+| `timeFormat` | `G:i` | PHP [`date()`](https://www.php.net/manual/en/function.date.php) format string for time output — e.g. `H:i` (09:00), `g:ia` (9:00am) |
 
 ## Snippets
 
@@ -85,6 +86,26 @@ Renders the `(scheduleTable:)` output.
 |----------|------|-------------|
 | `$slot->start` | `string` | Start time (e.g. `09:00`) |
 | `$slot->end` | `string` | End time (e.g. `17:00`) |
+
+**Formatting tips**
+
+Use `$day->formattedSlots` for times already formatted by the `timeFormat` option. Use `$day->slots` for the raw `HH:MM:SS` value to apply your own format:
+
+```php
+// Custom time format in a snippet
+$start = date('H:i', strtotime($slot->start)); // → "09:00"
+$start = date('g:ia', strtotime($slot->start)); // → "9:00am"
+```
+
+The weekday is available as a two-letter code (`mon`–`sun`) via `$day->weekday`. Use it with PHP's `date()` to get a localised name:
+
+```php
+// Custom weekday label in a snippet
+$label = date('l', strtotime('next ' . $day->weekday)); // → "Monday"
+$label = date('D', strtotime('next ' . $day->weekday));  // → "Mon"
+```
+
+For localised names that respect the site language, `$day->label` already contains the correct translation.
 
 ## Free vs. Pro
 

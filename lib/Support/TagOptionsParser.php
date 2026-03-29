@@ -9,7 +9,7 @@ use Kirby\Text\KirbyTag;
 final class TagOptionsParser
 {
     /**
-     * @return array{groupDays:?bool, showClosed:bool}
+     * @return array{groupDays:?bool, showClosed:bool, timeFormat:?string}
      */
     public static function parse(KirbyTag $tag): array
     {
@@ -25,6 +25,14 @@ final class TagOptionsParser
             $showClosed = in_array($showClosedValue, ['true', 'yes', '1'], true);
         }
 
-        return ['groupDays' => $groupDays, 'showClosed' => $showClosed];
+        $timeFormat = null;
+        if (property_exists($tag, 'timeFormat') && $tag->timeFormat !== null) {
+            $tf = trim((string)$tag->timeFormat);
+            if ($tf !== '') {
+                $timeFormat = $tf;
+            }
+        }
+
+        return ['groupDays' => $groupDays, 'showClosed' => $showClosed, 'timeFormat' => $timeFormat];
     }
 }

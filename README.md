@@ -66,9 +66,27 @@ Renders the `(scheduleTable:)` output.
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `$tableData` | `BusinessHoursDay[]` | One entry per weekday with `label`, `isClosed`, and `formattedSlots` |
+| `$tableData` | `BusinessHoursDay[]` | One entry per weekday — see properties below |
 | `$options` | `array` | Normalised options passed to the tag |
 | `$tag` | `KirbyTag\|null` | The originating KirbyTag instance |
+
+**`BusinessHoursDay` properties**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `$day->label` | `string` | Localised weekday name (e.g. `Monday`) |
+| `$day->isClosed` | `bool` | Whether this day has no opening hours |
+| `$day->isWeekend` | `bool` | Whether this day is Saturday or Sunday |
+| `$day->slots` | `TimeRange[]` | Raw time slots as stored |
+| `$day->formattedSlots` | `TimeRange[]` | Time slots formatted according to `timeFormat` option |
+| `$day->weekday` | `Weekday` | Weekday value object — cast to string for `mon`–`sun` |
+
+**`TimeRange` properties** (each item in `slots` / `formattedSlots`)
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `$slot->start` | `string` | Start time (e.g. `09:00`) |
+| `$slot->end` | `string` | End time (e.g. `17:00`) |
 
 ## Free vs. Pro
 

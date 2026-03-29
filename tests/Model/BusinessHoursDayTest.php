@@ -14,7 +14,9 @@ final class BusinessHoursDayTest extends TestCase
     private function makeMonday(): BusinessHoursDay
     {
         $weekday = Weekday::fromString('mon');
-        assert($weekday !== null);
+        if ($weekday === null) {
+            throw new \RuntimeException('Failed to create weekday: mon');
+        }
         $slot = new TimeRange('08:00:00', '17:00:00');
 
         return new BusinessHoursDay(
@@ -54,7 +56,9 @@ final class BusinessHoursDayTest extends TestCase
     public function test_empty_slots_represents_closed_day(): void
     {
         $weekday = Weekday::fromString('sat');
-        assert($weekday !== null);
+        if ($weekday === null) {
+            throw new \RuntimeException('Failed to create weekday: sat');
+        }
         $day = new BusinessHoursDay(
             weekday: $weekday,
             label: 'Saturday',
@@ -63,6 +67,5 @@ final class BusinessHoursDayTest extends TestCase
         );
 
         $this->assertEmpty($day->slots);
-        $this->assertTrue(empty($day->slots));
     }
 }

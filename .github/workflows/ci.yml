@@ -27,7 +27,7 @@ jobs:
         run: composer require --no-update --dev "getkirby/cms:${{ matrix.kirby }}"
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-audit
+        run: composer install --prefer-dist --no-security-blocking
 
       - name: Run tests
         run: ./vendor/bin/phpunit

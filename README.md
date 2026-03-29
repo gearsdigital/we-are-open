@@ -30,6 +30,29 @@ return [
 ];
 ```
 
+## Site Methods
+
+### `site()->weAreOpen()`
+
+Returns a `WeAreOpenFacade` instance for accessing opening hours in templates and snippets.
+
+#### `->businessHours()`
+
+Returns this week's opening hours as an array of `BusinessHoursDay` objects, one per weekday (Mon–Sun).
+
+```php
+$hours = site()->weAreOpen()->businessHours();
+
+foreach ($hours as $day) {
+    echo $day->label; // "Monday"
+    foreach ($day->slots as $slot) {
+        echo $slot->start . '–' . $slot->end; // "08:00:00–17:00:00"
+    }
+}
+```
+
+See the [Snippets](#snippets) section for all available properties on `BusinessHoursDay` and `TimeRange`.
+
 ## KirbyTags
 
 ### `(scheduleTable:)`

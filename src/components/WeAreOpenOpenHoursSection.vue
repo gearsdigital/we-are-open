@@ -1,6 +1,6 @@
 <template>
   <WeAreOpenSection :title="title" :subtitle="subtitle">
-    <!--    <OpeningHoursProTeaser />-->
+    <OpeningHoursProTeaser v-if="!allowMultipleSlots" />
     <OpeningHoursDayRow
       v-for="(day, index) in localOpenHours"
       :key="day.weekday"

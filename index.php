@@ -149,6 +149,9 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.errorSaving' => 'Error while saving',
             'we-are-open.messages.overlapError' => 'Please resolve overlaps before saving.',
             'we-are-open.messages.validationError' => 'Please resolve all errors (overlaps and invalid times) before saving.',
+
+            'we-are-open.proTeaserTitle' => "We're open PRO",
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« — unlimited time slots per day, flexible exception days, and automatic public holiday support. <a href="">Learn more…</a>',
         ],
     ],
 ]);

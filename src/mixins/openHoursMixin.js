@@ -1,8 +1,10 @@
 export const WEEKDAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
 /**
- * Shared mixin for both FREE and PRO WeAreOpen components
- * Contains common logic for handling opening hours
+ * Shared mixin for both FREE and PRO WeAreOpen components.
+ * Contains common logic for handling opening hours.
+ *
+ * Imported in PRO via the @we-are-open alias defined in kirbyup.config.js.
  */
 export default {
   data() {
@@ -13,7 +15,7 @@ export default {
 
   methods: {
     /**
-     * Format time string to ensure HH:MM:SS format
+     * Format time string to ensure HH:MM:SS format.
      */
     formatTime(time) {
       if (!time) return "";
@@ -25,7 +27,7 @@ export default {
     },
 
     /**
-     * Convert time string to minutes for comparison
+     * Convert time string to minutes for comparison.
      */
     timeToMinutes(time) {
       if (!time) return 0;
@@ -34,17 +36,15 @@ export default {
     },
 
     /**
-     * Check if a slot has valid times (start before end)
+     * Check if a slot has valid times (start before end).
      */
     isValidSlot(slot) {
-      if (!slot.start || !slot.end) return true; // Empty slots are valid for display
-      const startMinutes = this.timeToMinutes(slot.start);
-      const endMinutes = this.timeToMinutes(slot.end);
-      return startMinutes < endMinutes;
+      if (!slot.start || !slot.end) return true;
+      return this.timeToMinutes(slot.start) < this.timeToMinutes(slot.end);
     },
 
     /**
-     * Check if any slots in array have invalid times
+     * Check if any slots in array have invalid times.
      */
     hasInvalidTimes(slots) {
       return slots.some(slot => {
@@ -54,34 +54,39 @@ export default {
     },
 
     /**
-     * Check if any slots in array have overlapping times
+     * Check if any slots in array have overlapping times.
      */
     hasAnyOverlap(slots) {
       for (let i = 0; i < slots.length; i++) {
-        const currentSlot = slots[i];
-        if (!currentSlot.start || !currentSlot.end) continue;
-        if (!this.isValidSlot(currentSlot)) continue; // Skip invalid slots
+        const a = slots[i];
+        if (!a.start || !a.end || !this.isValidSlot(a)) continue;
 
         for (let j = i + 1; j < slots.length; j++) {
-          const otherSlot = slots[j];
-          if (!otherSlot.start || !otherSlot.end) continue;
-          if (!this.isValidSlot(otherSlot)) continue; // Skip invalid slots
+          const b = slots[j];
+          if (!b.start || !b.end || !this.isValidSlot(b)) continue;
 
-          const start1 = this.timeToMinutes(currentSlot.start);
-          const end1 = this.timeToMinutes(currentSlot.end);
-          const start2 = this.timeToMinutes(otherSlot.start);
-          const end2 = this.timeToMinutes(otherSlot.end);
+          const start1 = this.timeToMinutes(a.start);
+          const end1   = this.timeToMinutes(a.end);
+          const start2 = this.timeToMinutes(b.start);
+          const end2   = this.timeToMinutes(b.end);
 
-          if (start1 < end2 && start2 < end1) {
-            return true;
-          }
+          if (start1 < end2 && start2 < end1) return true;
         }
       }
       return false;
     },
 
     /**
-     * Initialize openHours from props, normalizing data structure
+     * Generate a unique ID for slots.
+     * Used by PRO components for exception day slots.
+     */
+    generateSlotId() {
+      return `slot_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    },
+
+    /**
+     * Initialize openHours from props, normalizing the data structure.
+     * Returns { weekday, slots, isOpen } per day.
      */
     initializeOpenHours(openHoursFromProps, defaultStartTime, defaultEndTime) {
       const existingByWeekday = {};
@@ -89,9 +94,7 @@ export default {
       if (Array.isArray(openHoursFromProps)) {
         openHoursFromProps.forEach((item, index) => {
           const key = item.weekday || WEEKDAYS[index];
-          if (key) {
-            existingByWeekday[key] = item;
-          }
+          if (key) existingByWeekday[key] = item;
         });
       }
 
@@ -106,24 +109,16 @@ export default {
             end: this.formatTime(slot.end),
           }));
         } else if (existing?.start && existing?.end) {
-          slots = [
-            {
-              start: this.formatTime(existing.start),
-              end: this.formatTime(existing.end),
-            },
-          ];
+          slots = [{ start: this.formatTime(existing.start), end: this.formatTime(existing.end) }];
         }
 
-        // Default: weekdays prefilled, weekend empty (as in your current logic)
         if (!existing && weekday !== "sat" && weekday !== "sun") {
           slots = [{ start: defaultStartTime, end: defaultEndTime }];
         }
 
-        // Check if day has explicit isOpen property
         if (existing && typeof existing.isOpen === "boolean") {
           isOpen = existing.isOpen;
         } else if (!existing || slots.length === 0) {
-          // Weekend or days without slots are closed by default
           isOpen = weekday !== "sat" && weekday !== "sun";
         }
 
@@ -132,37 +127,38 @@ export default {
     },
 
     /**
-     * Initialize closedDays from props, normalizing data structure
+     * Initialize closedDays from props, normalizing the data structure.
+     * Used by PRO components. Supports date ranges (dateEnd) and
+     * activation state (isActive) in addition to basic slot data.
      */
     initializeClosedDays(closedDaysFromProps) {
       return (closedDaysFromProps || []).map((day) => {
         let slots = [];
 
-        if (day.slots && Array.isArray(day.slots) && day.slots.length > 0) {
+        if (day.slots?.length) {
           slots = day.slots.map((slot) => ({
             start: this.formatTime(slot.start),
             end: this.formatTime(slot.end),
+            _id: slot._id || this.generateSlotId(),
           }));
         } else if (day.start && day.end) {
-          slots = [
-            {
-              start: this.formatTime(day.start),
-              end: this.formatTime(day.end),
-            },
-          ];
+          slots = [{
+            start: this.formatTime(day.start),
+            end: this.formatTime(day.end),
+            _id: this.generateSlotId(),
+          }];
         }
 
         return {
           date: day.date || "",
+          dateEnd: day.dateEnd || "",
           slots,
           reason: day.reason || "",
+          isActive: day.isActive !== false,
         };
       });
     },
 
-    /**
-     * Common slot update handlers
-     */
     handleUpdateSlot(dayIndex, { slotIndex, field, value }) {
       this.localOpenHours[dayIndex].slots[slotIndex][field] = value;
     },

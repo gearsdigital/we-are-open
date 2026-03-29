@@ -50,9 +50,17 @@ Renders a formatted table of your weekly opening hours.
 
 ## Snippets
 
+Kirby resolves snippets from `site/snippets/` before falling back to plugin-provided ones. To override any snippet, copy the file from the plugin into the matching path under `site/snippets/` and edit it freely — plugin updates will never overwrite your version.
+
+```
+site/snippets/
+└── we-are-open/
+    └── business-hours-table.php   ← your custom version
+```
+
 ### `we-are-open/business-hours-table`
 
-Renders the `(scheduleTable:)` output. Copy it into `site/snippets/we-are-open/business-hours-table.php` to customise the HTML.
+Renders the `(scheduleTable:)` output.
 
 **Variables**
 

@@ -118,8 +118,6 @@ final class BusinessHoursListService
                 label: self::weekdayLabel($weekday, $o),
                 slots: self::slotsToDTOs($slotsArray),
                 formattedSlots: self::slotsToDTOs($formattedSlotsArray),
-                isClosed: $isClosed,
-                isWeekend: $weekday->isWeekend(), // redundant but template-friendly
             );
         }
 

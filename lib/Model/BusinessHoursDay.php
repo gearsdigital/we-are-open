@@ -21,8 +21,6 @@ final readonly class BusinessHoursDay
         public string $label,
         public array $slots,
         public array $formattedSlots,
-        public bool $isClosed,
-        public bool $isWeekend,
     ) {
     }
 }

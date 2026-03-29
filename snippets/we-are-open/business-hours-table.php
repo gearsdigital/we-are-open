@@ -44,8 +44,8 @@ if (is_object($tag) && isset($tag->layout) && $tag->layout !== null) {
     <?php
     // Direct property access (BusinessHoursDay objects)
     $label = (string)$day->label;
-    $isClosed = $day->isClosed;
     $formattedSlots = $day->formattedSlots ?? [];
+    $isClosed = empty($formattedSlots);
 
     // Build "7:30–10:25, 15:00–19:00"
     $parts = [];

@@ -75,8 +75,6 @@ Renders the `(scheduleTable:)` output.
 | Property | Type | Description |
 |----------|------|-------------|
 | `$day->label` | `string` | Localised weekday name (e.g. `Monday`) |
-| `$day->isClosed` | `bool` | Whether this day has no opening hours |
-| `$day->isWeekend` | `bool` | Whether this day is Saturday or Sunday |
 | `$day->slots` | `TimeRange[]` | Raw time slots as stored |
 | `$day->formattedSlots` | `TimeRange[]` | Time slots formatted according to `timeFormat` option |
 | `$day->weekday` | `Weekday` | Weekday value object — cast to string for `mon`–`sun` |

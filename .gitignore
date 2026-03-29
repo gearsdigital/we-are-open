@@ -1,5 +1,6 @@
 node_modules/
 vendor/
+kirby/
 *.log
 composer.lock
 package-lock.json

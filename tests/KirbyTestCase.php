@@ -7,6 +7,20 @@ use PHPUnit\Framework\TestCase;
 
 abstract class KirbyTestCase extends TestCase
 {
+    private App $baseApp;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->baseApp = App::instance();
+    }
+
+    protected function tearDown(): void
+    {
+        App::instance($this->baseApp);
+        parent::tearDown();
+    }
+
     /**
      * Clone the current Kirby instance with custom site content.
      * Content values must be raw field strings (YAML for structured fields).

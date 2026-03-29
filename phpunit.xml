@@ -6,6 +6,7 @@
     <testsuites>
         <testsuite name="Unit">
             <directory>tests</directory>
+            <exclude>tests/fixtures</exclude>
         </testsuite>
     </testsuites>
     <source>

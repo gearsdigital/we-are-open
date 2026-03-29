@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*.*.*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: PHPUnit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit
+
+  release:
+    name: Build & Release
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Install PHP production dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: Create release archive
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          zip -r "we-are-open-${VERSION}.zip" \
+            index.php \
+            index.js \
+            index.css \
+            lib/ \
+            snippets/ \
+            vendor/ \
+            --exclude "vendor/bin/*"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: we-are-open-v*.zip
+          generate_release_notes: true

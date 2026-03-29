@@ -1,0 +1,14 @@
+{
+  "name": "we-are-open",
+  "version": "1.0.0",
+  "description": "Kirby Panel Plugin for Store Hours Management",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "npx -y kirbyup src/index.js --watch",
+    "build": "npx -y kirbyup src/index.js"
+  },
+  "devDependencies": {
+    "kirbyup": "^3.4.1"
+  }
+}

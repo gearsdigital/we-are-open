@@ -1,0 +1,14 @@
+{
+  "name": "gearsdigital/we-are-open",
+  "description": "Kirby plugin for managing store opening hours",
+  "type": "kirby-plugin",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "GearsDigital\\WeAreOpen\\": "lib/"
+    }
+  }
+}

@@ -5,7 +5,7 @@ A Kirby panel plugin for managing regular opening hours — straight from the pa
 ## Requirements
 
 - Kirby CMS >= 4.0
-- PHP >= 8.2
+- PHP >= 8.3
 
 ## Installation
 

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import openHoursMixin from "../mixins/openHoursMixin.js";
+import openHoursEditorMixin from "../mixins/openHoursEditorMixin.js";
 import WeAreOpenOpenHoursSection from "./WeAreOpenOpenHoursSection.vue";
 import WeAreOpenPanelShell from "./WeAreOpenPanelShell.vue";
 import WeAreOpenTeaser from "./WeAreOpenTeaser.vue";
@@ -37,7 +37,7 @@ export default {
     WeAreOpenOpenHoursSection,
     OpeningHoursProTeaser: WeAreOpenTeaser,
   },
-  mixins: [openHoursMixin],
+  mixins: [openHoursEditorMixin],
 
   props: {
     openHours: { type: Array, required: true },
@@ -50,79 +50,8 @@ export default {
     isSaving: { type: Boolean, default: null },
   },
 
-  data() {
-    // In Vue 2: do not call mixin methods from data(). Initialize in created().
-    return {
-      localOpenHours: [],
-      originalOpenHours: "[]",
-      internalIsSaving: false,
-    };
-  },
-
   created() {
-    const local = this.initializeOpenHours(
-      this.openHours,
-      this.defaultStartTime,
-      this.defaultEndTime
-    );
-    this.localOpenHours = local;
-    this.originalOpenHours = JSON.stringify(local);
-  },
-
-  computed: {
-    openHoursSubtitle() {
-      return this.isPro
-        ? this.$t("we-are-open-pro.openHours.subtitle")
-        : this.$t("we-are-open.openHours.subtitle");
-    },
-
-    computedHasChanges() {
-      if (this.hasChanges !== null) return this.hasChanges;
-      return JSON.stringify(this.localOpenHours) !== this.originalOpenHours;
-    },
-    computedIsSaving() {
-      if (this.isSaving !== null) return this.isSaving;
-      return this.internalIsSaving;
-    },
-
-    hasValidationErrors() {
-      return this.localOpenHours.some((day) => {
-        if (day.isOpen === false) return false;
-        return this.hasInvalidTimes(day.slots) || this.hasAnyOverlap(day.slots);
-      });
-    },
-  },
-
-  methods: {
-    async save() {
-      if (this.$listeners.save) {
-        this.$emit("save");
-        return;
-      }
-
-      if (this.hasValidationErrors) {
-        this.$panel.notification.error(this.$t("we-are-open.messages.validationError"));
-        return;
-      }
-
-      this.internalIsSaving = true;
-      try {
-        await this.$api.patch("we-are-open/save", {
-          openHours: this.localOpenHours,
-        });
-        this.originalOpenHours = JSON.stringify(this.localOpenHours);
-      } finally {
-        this.internalIsSaving = false;
-      }
-    },
-
-    revert() {
-      if (this.$listeners.revert) {
-        this.$emit("revert");
-        return;
-      }
-      this.localOpenHours = JSON.parse(this.originalOpenHours);
-    },
+    this.initOpenHours(this.openHours);
   },
 };
 </script>

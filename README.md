@@ -13,6 +13,7 @@ Opening hours change more often than most sites make it easy to update – usual
 - [Configuration](#configuration)
 - [Documentation](#documentation)
   - [Site method](#site-method)
+  - [Panel section](#panel-section)
   - [KirbyTags](#kirbytags)
   - [Snippets](#snippets)
 - [We Are Open PRO](#we-are-open-pro)
@@ -71,6 +72,23 @@ foreach ($hours as $day) {
 ```
 
 See [Snippets](#snippets) for all available properties on `BusinessHoursDay` and `TimeRange`.
+
+### Panel section
+
+Opening hours don't have to live in their own dedicated view — drop the
+`openinghours` [panel section](https://getkirby.com/docs/reference/panel/sections)
+into any blueprint (`site.yml`, a page, wherever it makes sense) instead:
+
+```yaml
+# site.yml
+sections:
+  openingHours:
+    type: openinghours
+    label: Opening Hours # optional, defaults to "Opening hours"
+```
+
+It reads and saves the exact same data as the dedicated view — use one, the
+other, or both; they'll always stay in sync.
 
 ### KirbyTags
 

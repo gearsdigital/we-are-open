@@ -50,6 +50,27 @@ Kirby::plugin('gearsdigital/we-are-open', [
         },
     ],
 
+    'sections' => [
+        'openinghours' => [
+            'props' => [
+                'label' => function ($label = null) {
+                    return $label ?? t('we-are-open.title');
+                },
+            ],
+            'computed' => [
+                'openHours' => function () {
+                    return Api::normalizeOpenHours(SiteYamlReader::get(SiteYamlKeys::OPENHOURS));
+                },
+                'defaultStartTime' => function () {
+                    return option('gearsdigital.we-are-open.defaultStartTime', '08:00:00');
+                },
+                'defaultEndTime' => function () {
+                    return option('gearsdigital.we-are-open.defaultEndTime', '17:00:00');
+                },
+            ],
+        ],
+    ],
+
     'api' => [
         'routes' => [
             [

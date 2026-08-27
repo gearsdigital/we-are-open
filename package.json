@@ -1,7 +1,7 @@
 {
   "name": "we-are-open",
   "version": "1.0.0",
-  "description": "Kirby Panel Plugin for Store Hours Management",
+  "description": "Kirby panel plugin for opening hours — built for shops, cafés, and practices",
   "license": "MIT",
   "type": "module",
   "scripts": {

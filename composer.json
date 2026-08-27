@@ -1,6 +1,6 @@
 {
   "name": "gearsdigital/we-are-open",
-  "description": "Kirby plugin for managing store opening hours",
+  "description": "Kirby panel plugin for opening hours — built for shops, cafés, and practices",
   "type": "kirby-plugin",
   "license": "MIT",
   "require": {

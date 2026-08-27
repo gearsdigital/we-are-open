@@ -111,6 +111,13 @@ final class BusinessHoursListService
                 continue;
             }
 
+            // A day marked closed (isOpen=false) may still have stored slots
+            // (the panel keeps them around so re-opening the day restores the
+            // previous hours) — never surface those slots while closed.
+            if ($isClosed) {
+                $slotsArray = [];
+            }
+
             $formattedSlotsArray = self::formatSlots($slotsArray, $o);
 
             $rows[] = new BusinessHoursDay(

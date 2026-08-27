@@ -81,6 +81,11 @@ final class Api
                 // If both empty, treat as no slots
                 if ($firstSlot['start'] === '' && $firstSlot['end'] === '') {
                     $firstSlot = [];
+                } elseif ($firstSlot['start'] !== '' && $firstSlot['end'] !== '' && $firstSlot['start'] >= $firstSlot['end']) {
+                    // Defense in depth: the panel already blocks saving an
+                    // invalid range, but never persist one that gets through
+                    // (a direct API call, a future client bug, ...).
+                    $firstSlot = [];
                 }
             }
 

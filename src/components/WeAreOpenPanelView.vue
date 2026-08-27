@@ -84,12 +84,24 @@ export default {
       if (this.isSaving !== null) return this.isSaving;
       return this.internalIsSaving;
     },
+
+    hasValidationErrors() {
+      return this.localOpenHours.some((day) => {
+        if (day.isOpen === false) return false;
+        return this.hasInvalidTimes(day.slots) || this.hasAnyOverlap(day.slots);
+      });
+    },
   },
 
   methods: {
     async save() {
       if (this.$listeners.save) {
         this.$emit("save");
+        return;
+      }
+
+      if (this.hasValidationErrors) {
+        this.$panel.notification.error(this.$t("we-are-open.messages.validationError"));
         return;
       }
 

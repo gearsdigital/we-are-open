@@ -56,7 +56,13 @@ final readonly class WeAreOpenFacade
     {
         $openhours = SiteYamlReader::get(SiteYamlKeys::OPENHOURS);
 
-        return BusinessHoursListService::build($openhours, []);
+        // Match the documented contract (README: "one per weekday, Mon–Sun",
+        // `$day->label` e.g. "Monday") rather than BusinessHoursListService's
+        // own defaults, which are tuned for the (scheduleTable:) tag instead.
+        return BusinessHoursListService::build($openhours, [
+            'hideWeekends' => false,
+            'weekdayFormat' => 'l',
+        ]);
     }
 }
 

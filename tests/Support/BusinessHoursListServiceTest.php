@@ -118,6 +118,42 @@ final class BusinessHoursListServiceTest extends \KirbyTestCase
         $this->assertCount(4, $days);
     }
 
+    public function test_day_marked_closed_has_no_slots_even_if_slots_are_stored(): void
+    {
+        // The panel keeps a day's slots after it's toggled closed (so
+        // re-opening the day restores the previous hours). The rendered
+        // output must not treat that day as open.
+        $model = $this->standardOpenHoursModel();
+        foreach ($model as &$row) {
+            if ($row['weekday'] === 'mon') {
+                $row['isOpen'] = false;
+            }
+        }
+        unset($row);
+
+        $days = BusinessHoursListService::build($model, []);
+        $monday = $days[0];
+
+        $this->assertSame('mon', (string) $monday->weekday);
+        $this->assertEmpty($monday->slots);
+        $this->assertEmpty($monday->formattedSlots);
+    }
+
+    public function test_day_marked_closed_is_excluded_when_hide_closed_days_is_true(): void
+    {
+        $model = $this->standardOpenHoursModel();
+        foreach ($model as &$row) {
+            if ($row['weekday'] === 'mon') {
+                $row['isOpen'] = false;
+            }
+        }
+        unset($row);
+
+        $days = BusinessHoursListService::build($model, ['hideClosedDays' => true]);
+        $weekdays = array_map(fn ($d) => (string) $d->weekday, $days);
+        $this->assertNotContains('mon', $weekdays);
+    }
+
     public function test_label_is_non_empty_string(): void
     {
         $days = $this->build();

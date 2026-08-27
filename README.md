@@ -2,6 +2,8 @@
 
 A Kirby panel plugin for managing regular opening hours — straight from the panel, no YAML editing required.
 
+![The Regular Opening Hours screen in the Kirby panel](media/panel-screenshot.png)
+
 ## Requirements
 
 - Kirby CMS >= 4.0

@@ -88,8 +88,63 @@ Renders a formatted table of your weekly opening hours.
 | Option | Default | Description |
 |--------|---------|-------------|
 | `layout` | — | CSS class added as `is-layout-{value}` on the table element. Pass any string — no functional effect in the Free version. |
-| `showClosed` | `false` | Include days marked as closed in the output |
+| `showClosed` | `true` | Include days marked as closed in the output |
+| `showWeekends` | `true` | Include Saturday and Sunday in the output |
 | `timeFormat` | `G:i` | PHP [`date()`](https://www.php.net/manual/en/function.date.php) format string for time output — e.g. `H:i` (09:00), `g:ia` (9:00am) |
+
+**Example output** — for a week configured as Mon–Fri 8:00–17:00 (Thu until
+19:00) and Sat 9:00–13:00, Sunday closed:
+
+```
+(scheduleTable:)
+
+Mon   8:00–17:00
+Tue   8:00–17:00
+Wed   8:00–17:00
+Thu   8:00–19:00
+Fri   8:00–17:00
+Sat   9:00–13:00
+Sun   –
+```
+
+```
+(scheduleTable: showClosed: false)
+
+Mon   8:00–17:00
+Tue   8:00–17:00
+Wed   8:00–17:00
+Thu   8:00–19:00
+Fri   8:00–17:00
+Sat   9:00–13:00
+```
+
+```
+(scheduleTable: showWeekends: false)
+
+Mon   8:00–17:00
+Tue   8:00–17:00
+Wed   8:00–17:00
+Thu   8:00–19:00
+Fri   8:00–17:00
+```
+
+```
+(scheduleTable: timeFormat: H:i)
+
+Mon   08:00–17:00
+...
+Sat   09:00–13:00
+Sun   –
+```
+
+```
+(scheduleTable: timeFormat: g:ia)
+
+Mon   8:00am–5:00pm
+...
+Sat   9:00am–1:00pm
+Sun   –
+```
 
 ### Snippets
 

@@ -85,10 +85,15 @@ Kirby::plugin('gearsdigital/we-are-open', [
 
     'tags' => [
         'scheduleTable' => [
+            // KirbyTag matches attribute names case-insensitively but only
+            // promotes them to $tag->{name} properties when the registered
+            // name here is lowercase — keep these lowercase even though the
+            // tag itself reads fine as `(scheduleTable: showClosed: ...)`.
             'attr' => [
                 'layout',
-                'showClosed',
-                'timeFormat',
+                'showclosed',
+                'showweekends',
+                'timeformat',
             ],
             'html' => static function ($tag): string {
                 return ScheduleTableTagService::render($tag);

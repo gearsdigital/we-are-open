@@ -1,10 +1,10 @@
 # We Are Open
 
-A Kirby panel plugin for managing regular opening hours — straight from the panel, no YAML editing required.
+Opening hours change more often than most sites make it easy to update – usually that means building a custom panel field just to manage them, then hand-rolling the template logic to display them. **We Are Open** gives you both out of the box: set the week's hours in a dedicated panel screen, drop `(scheduleTable:)` into a template, and it just renders – you just need to add some CSS to make it fit your site.
 
 ![The Regular Opening Hours screen in the Kirby panel](media/panel-screenshot.png)
 
-**Free** covers the everyday case: one time slot per weekday. **[We Are Open PRO](#we-are-open-pro)** adds multiple slots per day, exception days, and public holidays that keep themselves up to date. It's early access — [request it by email](mailto:plugins@gearsdigital.com).
+**Free** covers the everyday case: one time slot per weekday. **[We Are Open PRO](#we-are-open-pro)** adds multiple slots per day, exception days, and public holidays that keep themselves up to date. It's early access – [request it by email](mailto:plugins@gearsdigital.com).
 
 ## Contents
 
@@ -87,12 +87,12 @@ Renders a formatted table of your weekly opening hours.
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `layout` | — | CSS class added as `is-layout-{value}` on the table element. Pass any string — no functional effect in the Free version. |
+| `layout` | – | CSS class added as `is-layout-{value}` on the table element. Pass any string – no functional effect in the Free version. |
 | `showClosed` | `true` | Include days marked as closed in the output |
 | `showWeekends` | `true` | Include Saturday and Sunday in the output |
-| `timeFormat` | `G:i` | PHP [`date()`](https://www.php.net/manual/en/function.date.php) format string for time output — e.g. `H:i` (09:00), `g:ia` (9:00am) |
+| `timeFormat` | `G:i` | PHP [`date()`](https://www.php.net/manual/en/function.date.php) format string for time output – e.g. `H:i` (09:00), `g:ia` (9:00am) |
 
-**Example output** — for a week configured as Mon–Fri 8:00–17:00 (Thu until
+**Example output** – for a week configured as Mon–Fri 8:00–17:00 (Thu until
 19:00) and Sat 9:00–13:00, Sunday closed:
 
 ```
@@ -148,7 +148,7 @@ Sun   –
 
 ### Snippets
 
-Kirby resolves snippets from `site/snippets/` before falling back to plugin-provided ones. To override any snippet, copy the file from the plugin into the matching path under `site/snippets/` and edit it freely — plugin updates will never overwrite your version.
+Kirby resolves snippets from `site/snippets/` before falling back to plugin-provided ones. To override any snippet, copy the file from the plugin into the matching path under `site/snippets/` and edit it freely – plugin updates will never overwrite your version.
 
 ```
 site/snippets/
@@ -164,7 +164,7 @@ Renders the `(scheduleTable:)` output.
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `$tableData` | `BusinessHoursDay[]` | One entry per weekday — see properties below |
+| `$tableData` | `BusinessHoursDay[]` | One entry per weekday – see properties below |
 | `$options` | `array` | Normalised options passed to the tag |
 | `$tag` | `KirbyTag\|null` | The originating KirbyTag instance |
 
@@ -175,7 +175,7 @@ Renders the `(scheduleTable:)` output.
 | `$day->label` | `string` | Localised weekday name (e.g. `Monday`) |
 | `$day->slots` | `TimeRange[]` | Raw time slots as stored |
 | `$day->formattedSlots` | `TimeRange[]` | Time slots formatted according to `timeFormat` option |
-| `$day->weekday` | `Weekday` | Weekday value object — cast to string for `mon`–`sun` |
+| `$day->weekday` | `Weekday` | Weekday value object – cast to string for `mon`–`sun` |
 
 **`TimeRange` properties** (each item in `slots` / `formattedSlots`)
 
@@ -211,19 +211,19 @@ the cases that don't fit a single time slot per day: lunch breaks, split
 shifts, seasonal closures, and public holidays that shouldn't need a yearly
 reminder.
 
-- **Multiple time slots per day** — split a day into two or more open
+- **Multiple time slots per day** – split a day into two or more open
   windows, e.g. 9:00–12:00 and 14:00–18:00 for a lunch break, instead of one
   continuous slot.
-- **Exception days** — override the regular schedule for a single date: a
+- **Exception days** – override the regular schedule for a single date: a
   training day, a spontaneous closure, a one-off late opening.
-- **Exception day ranges** — the same override, spanning a start and end
+- **Exception day ranges** – the same override, spanning a start and end
   date: company holidays, renovations, seasonal closures.
-- **Public holiday detection** — pick a country and public holidays are
+- **Public holiday detection** – pick a country and public holidays are
   added automatically, kept up to date every year. Any holiday can still
   get its own hours if you're open anyway.
-- **`(openNote:)` KirbyTag** — a short, self-updating status line (open,
+- **`(openNote:)` KirbyTag** – a short, self-updating status line (open,
   closed, or opening soon) for headers, banners, or a contact page.
-- **Extended `scheduleTable` options** — more control over the rendered
+- **Extended `scheduleTable` options** – more control over the rendered
   table beyond the Free set.
 
 | Feature | Free | Pro |
@@ -231,17 +231,16 @@ reminder.
 | Regular opening hours | ✅ | ✅ |
 | One time slot per day | ✅ | ✅ |
 | `(scheduleTable:)` KirbyTag | ✅ | ✅ |
-| Multiple time slots per day | — | ✅ |
-| Exception days | — | ✅ |
-| Exception day ranges | — | ✅ |
-| Public holiday detection | — | ✅ |
-| `(openNote:)` KirbyTag | — | ✅ |
-| Extended `scheduleTable` options | — | ✅ |
+| Multiple time slots per day | – | ✅ |
+| Exception days | – | ✅ |
+| Exception day ranges | – | ✅ |
+| Public holiday detection | – | ✅ |
+| `(openNote:)` KirbyTag | – | ✅ |
+| Extended `scheduleTable` options | – | ✅ |
 
-> **Early access.** We Are Open PRO isn't publicly released yet. The
-> fastest way to get it is to email
-> [plugins@gearsdigital.com](mailto:plugins@gearsdigital.com) — we'll
-> get you set up directly.
+Every feature above is ready to use today – multiple slots, exceptions,
+holidays, the lot. It's just not on Packagist yet: email
+[plugins@gearsdigital.com](mailto:plugins@gearsdigital.com) to get it.
 
 ## Development
 

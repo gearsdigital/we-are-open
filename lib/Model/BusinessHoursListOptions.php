@@ -16,10 +16,18 @@ use Throwable;
  */
 final readonly class BusinessHoursListOptions
 {
+    /**
+     * PHP date() format characters that make sense for a *weekday*
+     * (as opposed to day-of-month/year characters like 'd' or 'j').
+     * 'D'/'l' render a localized name; 'N'/'w' render PHP's own numeric
+     * weekday, exactly as documented for date().
+     */
+    public const array WEEKDAY_FORMATS = ['D', 'l', 'N', 'w'];
+
     public function __construct(
         public bool $hideClosedDays,
         public bool $hideWeekends,
-        public string $weekdayFormat, // guaranteed: 'D' or 'l'
+        public string $weekdayFormat, // guaranteed: one of self::WEEKDAY_FORMATS
         public ?string $timeFormat,
         public string $locale,
         public string $timezone,
@@ -36,9 +44,10 @@ final readonly class BusinessHoursListOptions
      */
     public static function fromArray(array $options): self
     {
-        // weekdayFormat is intentionally restricted for a simpler, safer implementation.
+        // Restricted to PHP date()'s own weekday characters (case-sensitive,
+        // same as date() itself — 'D' and 'd' are not interchangeable).
         $weekdayFormat = (string)($options['weekdayFormat'] ?? 'D');
-        if ($weekdayFormat !== 'D' && $weekdayFormat !== 'l') {
+        if (!in_array($weekdayFormat, self::WEEKDAY_FORMATS, true)) {
             $weekdayFormat = 'D';
         }
 

@@ -40,9 +40,14 @@ use Throwable;
  *    option('gearsdigital.we-are-open.weekdayMap')
  * 3) Last resort fallback: ucfirst('mon') => 'Mon'
  *
- * IMPORTANT: weekdayFormat is intentionally restricted to keep logic simple:
- * - 'D' => short weekday label
- * - 'l' => long weekday label
+ * IMPORTANT: weekdayFormat mirrors PHP date()'s own weekday characters
+ * (BusinessHoursListOptions::WEEKDAY_FORMATS):
+ * - 'D' => short, localized weekday name (e.g. "Mon"/"Mo.")
+ * - 'l' => long, localized weekday name (e.g. "Monday"/"Montag")
+ * - 'N' => ISO-8601 numeric weekday, 1 (Monday) to 7 (Sunday)
+ * - 'w' => numeric weekday, 0 (Sunday) to 6 (Saturday)
+ * 'D'/'l' go through the same localization as the rest of this service;
+ * 'N'/'w' are locale-independent numbers, formatted directly via date().
  *
  * NOTE: Grouping functionality (consecutive and by-hours) is a PRO-only feature
  * and is implemented via GroupingStrategy pattern in the PRO plugin.
@@ -294,6 +299,10 @@ final class BusinessHoursListService
      */
     private static function weekdayLabel(Weekday $weekday, BusinessHoursListOptions $o): string
     {
+        if ($o->weekdayFormat === 'N' || $o->weekdayFormat === 'w') {
+            return self::weekdayToDate($weekday, $o->timezone)->format($o->weekdayFormat);
+        }
+
         $type = ($o->weekdayFormat === 'l') ? 'long' : 'short';
 
         return self::weekdayName($weekday, $type, $o);

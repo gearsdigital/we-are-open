@@ -97,22 +97,32 @@ final class TagOptionsParserTest extends \KirbyTestCase
     }
 
     /**
-     * @dataProvider weekdayFormatLongSynonyms
+     * @dataProvider validWeekdayFormats
      */
-    public function test_weekday_format_long_synonyms_map_to_l(string $value): void
+    public function test_weekday_format_accepts_php_date_weekday_characters(string $value): void
     {
         $tag = $this->parseTag("(scheduleTable: weekdayFormat: {$value})");
         $options = TagOptionsParser::parse($tag);
 
-        $this->assertSame('l', $options['weekdayFormat']);
+        $this->assertSame($value, $options['weekdayFormat']);
     }
 
-    public static function weekdayFormatLongSynonyms(): array
+    public static function validWeekdayFormats(): array
     {
-        return [['l'], ['L'], ['long'], ['Long'], ['full']];
+        return [['D'], ['l'], ['N'], ['w']];
     }
 
-    public function test_weekday_format_short_defaults_to_null(): void
+    public function test_weekday_format_is_case_sensitive_like_date(): void
+    {
+        // 'L' (leap-year flag) and 'n' (month, no leading zero) are real but
+        // unrelated date() characters — must not be treated as 'l'/'N'.
+        $tag = $this->parseTag('(scheduleTable: weekdayFormat: L)');
+        $options = TagOptionsParser::parse($tag);
+
+        $this->assertNull($options['weekdayFormat']);
+    }
+
+    public function test_weekday_format_omitted_defaults_to_null(): void
     {
         $tag = $this->parseTag('(scheduleTable:)');
         $options = TagOptionsParser::parse($tag);

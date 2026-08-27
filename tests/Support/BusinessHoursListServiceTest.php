@@ -72,6 +72,36 @@ final class BusinessHoursListServiceTest extends \KirbyTestCase
         $this->assertSame('8:00', $monday->formattedSlots[0]->start);
     }
 
+    public function test_weekday_format_N_gives_iso_weekday_number(): void
+    {
+        // PHP date('N', ...): 1 (Monday) through 7 (Sunday) — Sunday is what
+        // distinguishes this from 'w' below, so include it explicitly.
+        $model = $this->standardOpenHoursModel();
+        $model[] = ['weekday' => 'sun', 'slots' => [['start' => '10:00:00', 'end' => '12:00:00']]];
+
+        $days = BusinessHoursListService::build($model, ['weekdayFormat' => 'N', 'hideWeekends' => false, 'hideClosedDays' => true]);
+        $labels = array_map(fn ($d) => $d->label, $days);
+        $this->assertSame(['1', '2', '3', '4', '5', '7'], $labels);
+    }
+
+    public function test_weekday_format_w_gives_zero_based_weekday_number(): void
+    {
+        // PHP date('w', ...): 0 (Sunday) through 6 (Saturday).
+        $model = $this->standardOpenHoursModel();
+        $model[] = ['weekday' => 'sun', 'slots' => [['start' => '10:00:00', 'end' => '12:00:00']]];
+
+        $days = BusinessHoursListService::build($model, ['weekdayFormat' => 'w', 'hideWeekends' => false, 'hideClosedDays' => true]);
+        $labels = array_map(fn ($d) => $d->label, $days);
+        $this->assertSame(['1', '2', '3', '4', '5', '0'], $labels);
+    }
+
+    public function test_invalid_weekday_format_falls_back_to_short_label(): void
+    {
+        $days = $this->build(['weekdayFormat' => 'x']);
+        // Falls back to 'D' (short, localized) rather than a raw 'x'.
+        $this->assertNotSame('x', $days[0]->label);
+    }
+
     public function test_raw_slots_are_never_modified_by_time_format(): void
     {
         $days = $this->build(['timeFormat' => 'H:i']);

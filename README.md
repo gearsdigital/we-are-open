@@ -91,7 +91,7 @@ Renders a formatted table of your weekly opening hours.
 | `showClosed` | `true` | Include days marked as closed in the output |
 | `showWeekends` | `true` | Include Saturday and Sunday in the output |
 | `timeFormat` | `G:i` | PHP [`date()`](https://www.php.net/manual/en/function.date.php) format string for time output – e.g. `H:i` (09:00), `g:ia` (9:00am) |
-| `weekdayFormat` | short | `long`/`l`/`full` for full weekday names (e.g. `Monday`); anything else keeps the short form (e.g. `Mon`) |
+| `weekdayFormat` | `D` | One of PHP [`date()`](https://www.php.net/manual/en/function.date.php)'s own weekday characters – case-sensitive, same as `date()` itself: `D` short name (`Mon`), `l` full name (`Monday`), `N` ISO weekday number `1`–`7`, `w` weekday number `0`–`6`. Anything else falls back to `D`. |
 
 **Example output** – for a week configured as Mon–Fri 8:00–17:00 (Thu until
 19:00) and Sat 9:00–13:00, Sunday closed:
@@ -148,7 +148,7 @@ Sun   –
 ```
 
 ```
-(scheduleTable: weekdayFormat: long)
+(scheduleTable: weekdayFormat: l)
 
 Monday      8:00–17:00
 Tuesday     8:00–17:00
@@ -157,6 +157,18 @@ Thursday    8:00–19:00
 Friday      8:00–17:00
 Saturday    9:00–13:00
 Sunday      –
+```
+
+```
+(scheduleTable: weekdayFormat: N)
+
+1   8:00–17:00
+2   8:00–17:00
+3   8:00–17:00
+4   8:00–19:00
+5   8:00–17:00
+6   9:00–13:00
+7   –
 ```
 
 ### Snippets

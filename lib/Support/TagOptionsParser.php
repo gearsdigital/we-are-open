@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GearsDigital\WeAreOpen\Support;
 
+use GearsDigital\WeAreOpen\Model\BusinessHoursListOptions;
 use Kirby\Text\KirbyTag;
 
 final class TagOptionsParser
@@ -43,17 +44,15 @@ final class TagOptionsParser
             }
         }
 
-        // BusinessHoursListOptions only accepts 'D' (short) or 'l' (long)
-        // and silently falls back to 'D' for anything else — accept a few
-        // friendly synonyms here so a typo/wrong case doesn't quietly
-        // produce the opposite of what was asked for.
+        // Same character set as PHP's own date(): 'D'/'l' for a (localized)
+        // name, 'N'/'w' for a numeric weekday — case-sensitive, exactly as
+        // date() itself is ('D' and 'd' are unrelated format characters).
+        // Anything else falls back to the 'D' default rather than guessing.
         $weekdayFormat = null;
         if ($tag->weekdayformat !== null) {
-            $wf = strtolower(trim((string)$tag->weekdayformat));
-            if (in_array($wf, ['l', 'long', 'full'], true)) {
-                $weekdayFormat = 'l';
-            } elseif (in_array($wf, ['d', 'short'], true)) {
-                $weekdayFormat = 'D';
+            $wf = trim((string)$tag->weekdayformat);
+            if (in_array($wf, BusinessHoursListOptions::WEEKDAY_FORMATS, true)) {
+                $weekdayFormat = $wf;
             }
         }
 

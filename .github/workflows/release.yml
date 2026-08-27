@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/tests.yml
+
+  release:
+    name: Release
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Install PHP production dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: Create release archive
+        run: |
+          zip -r we-are-open.zip \
+            index.php \
+            index.js \
+            index.css \
+            lib/ \
+            snippets/ \
+            vendor/ \
+            --exclude "vendor/bin/*"
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

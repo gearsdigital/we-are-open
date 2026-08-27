@@ -146,7 +146,25 @@ For localised names that respect the site language, `$day->label` already contai
 | `(openNote:)` KirbyTag | — | ✅ |
 | Extended `scheduleTable` options | — | ✅ |
 
-[→ We Are Open PRO](https://github.com/gearsdigital/we-are-open-pro)
+**We Are Open PRO is not publicly available yet.** If you're interested, email
+[developer@gearsdigital.com](mailto:developer@gearsdigital.com).
+
+### What Pro adds
+
+- **Multiple time slots per day** — split a day into two or more open windows,
+  e.g. 9:00–12:00 and 14:00–18:00 for a lunch break, instead of one
+  continuous slot.
+- **Exception days** — override the regular schedule for a single date: a
+  training day, a spontaneous closure, a one-off late opening.
+- **Exception day ranges** — the same override, spanning a start and end
+  date: company holidays, renovations, seasonal closures.
+- **Public holiday detection** — pick a country and public holidays are
+  added automatically, kept up to date every year. Any holiday can still get
+  its own hours if you're open anyway.
+- **`(openNote:)` KirbyTag** — a short, self-updating status line (open,
+  closed, or opening soon) for headers, banners, or a contact page.
+- **Extended `scheduleTable` options** — more control over the rendered
+  table beyond the Free set.
 
 ## Development
 

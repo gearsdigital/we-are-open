@@ -4,7 +4,7 @@ A Kirby panel plugin for managing regular opening hours — straight from the pa
 
 ![The Regular Opening Hours screen in the Kirby panel](media/panel-screenshot.png)
 
-**Free** covers the everyday case: one time slot per weekday. **[We Are Open PRO](#we-are-open-pro)** adds multiple slots per day, exception days, and public holidays that keep themselves up to date. It's early access — [request it by email](mailto:developer@gearsdigital.com).
+**Free** covers the everyday case: one time slot per weekday. **[We Are Open PRO](#we-are-open-pro)** adds multiple slots per day, exception days, and public holidays that keep themselves up to date. It's early access — [request it by email](mailto:plugins@gearsdigital.com).
 
 ## Contents
 
@@ -185,7 +185,7 @@ reminder.
 
 > **Early access.** We Are Open PRO isn't publicly released yet. The
 > fastest way to get it is to email
-> [developer@gearsdigital.com](mailto:developer@gearsdigital.com) — we'll
+> [plugins@gearsdigital.com](mailto:plugins@gearsdigital.com) — we'll
 > get you set up directly.
 
 ## Development

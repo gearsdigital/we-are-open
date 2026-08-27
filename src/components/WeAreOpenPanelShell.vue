@@ -4,12 +4,24 @@
       <k-header>
         {{ title }}
         <template #buttons>
-          <k-form-controls
-            :has-diff="hasDiff"
-            :is-processing="isProcessing"
-            @discard="$emit('discard')"
-            @submit="$emit('submit')"
-          />
+          <k-button-group v-if="hasDiff">
+            <k-button
+              icon="check"
+              variant="filled"
+              theme="notice"
+              :disabled="isProcessing"
+              @click="$emit('submit')"
+            >
+              {{ $t("save") }}
+            </k-button>
+            <k-button
+              icon="undo"
+              :disabled="isProcessing"
+              @click="$emit('discard')"
+            >
+              {{ $t("discard") }}
+            </k-button>
+          </k-button-group>
         </template>
       </k-header>
 

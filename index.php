@@ -94,6 +94,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
                 'showclosed',
                 'showweekends',
                 'timeformat',
+                'weekdayformat',
             ],
             'html' => static function ($tag): string {
                 return ScheduleTableTagService::render($tag);

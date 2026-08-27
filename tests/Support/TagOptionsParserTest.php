@@ -26,7 +26,7 @@ final class TagOptionsParserTest extends \KirbyTestCase
 
         // Mirrors the real registration in index.php.
         KirbyTag::$types['scheduletable'] = [
-            'attr' => ['layout', 'showclosed', 'showweekends', 'timeformat'],
+            'attr' => ['layout', 'showclosed', 'showweekends', 'timeformat', 'weekdayformat'],
         ];
     }
 
@@ -94,5 +94,37 @@ final class TagOptionsParserTest extends \KirbyTestCase
         $options = TagOptionsParser::parse($tag);
 
         $this->assertFalse($options['hideWeekends']);
+    }
+
+    /**
+     * @dataProvider weekdayFormatLongSynonyms
+     */
+    public function test_weekday_format_long_synonyms_map_to_l(string $value): void
+    {
+        $tag = $this->parseTag("(scheduleTable: weekdayFormat: {$value})");
+        $options = TagOptionsParser::parse($tag);
+
+        $this->assertSame('l', $options['weekdayFormat']);
+    }
+
+    public static function weekdayFormatLongSynonyms(): array
+    {
+        return [['l'], ['L'], ['long'], ['Long'], ['full']];
+    }
+
+    public function test_weekday_format_short_defaults_to_null(): void
+    {
+        $tag = $this->parseTag('(scheduleTable:)');
+        $options = TagOptionsParser::parse($tag);
+
+        $this->assertNull($options['weekdayFormat']);
+    }
+
+    public function test_weekday_format_unrecognized_value_falls_back_to_null(): void
+    {
+        $tag = $this->parseTag('(scheduleTable: weekdayFormat: banana)');
+        $options = TagOptionsParser::parse($tag);
+
+        $this->assertNull($options['weekdayFormat']);
     }
 }

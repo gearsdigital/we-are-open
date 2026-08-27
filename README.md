@@ -91,6 +91,7 @@ Renders a formatted table of your weekly opening hours.
 | `showClosed` | `true` | Include days marked as closed in the output |
 | `showWeekends` | `true` | Include Saturday and Sunday in the output |
 | `timeFormat` | `G:i` | PHP [`date()`](https://www.php.net/manual/en/function.date.php) format string for time output – e.g. `H:i` (09:00), `g:ia` (9:00am) |
+| `weekdayFormat` | short | `long`/`l`/`full` for full weekday names (e.g. `Monday`); anything else keeps the short form (e.g. `Mon`) |
 
 **Example output** – for a week configured as Mon–Fri 8:00–17:00 (Thu until
 19:00) and Sat 9:00–13:00, Sunday closed:
@@ -144,6 +145,18 @@ Mon   8:00am–5:00pm
 ...
 Sat   9:00am–1:00pm
 Sun   –
+```
+
+```
+(scheduleTable: weekdayFormat: long)
+
+Monday      8:00–17:00
+Tuesday     8:00–17:00
+Wednesday   8:00–17:00
+Thursday    8:00–19:00
+Friday      8:00–17:00
+Saturday    9:00–13:00
+Sunday      –
 ```
 
 ### Snippets
@@ -223,8 +236,19 @@ reminder.
   get its own hours if you're open anyway.
 - **`(openNote:)` KirbyTag** – a short, self-updating status line (open,
   closed, or opening soon) for headers, banners, or a contact page.
+- **Grouped days with identical hours** – "Mon–Fri 8:00–17:00" instead of
+  five separate rows, wherever consecutive days share the same schedule.
 - **Extended `scheduleTable` options** – more control over the rendered
   table beyond the Free set.
+
+**For snippet authors**, Pro's `we-are-open/business-hours-table` snippet
+also gets:
+
+- **`$rawData`** – the underlying model behind `$tableData`, for building a
+  fully custom rendering beyond what `BusinessHoursDay` exposes.
+- **`$day->isClosed` / `$day->isWeekend`** – Free snippets derive "closed"
+  from empty slots themselves; Pro's `BusinessHoursDay` carries both flags
+  directly.
 
 | Feature | Free | Pro |
 |---------|:----:|:---:|
@@ -234,6 +258,7 @@ reminder.
 | Multiple time slots per day | – | ✅ |
 | Exception days | – | ✅ |
 | Exception day ranges | – | ✅ |
+| Grouped days with identical hours | – | ✅ |
 | Public holiday detection | – | ✅ |
 | `(openNote:)` KirbyTag | – | ✅ |
 | Extended `scheduleTable` options | – | ✅ |

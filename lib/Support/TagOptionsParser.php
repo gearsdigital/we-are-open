@@ -9,7 +9,7 @@ use Kirby\Text\KirbyTag;
 final class TagOptionsParser
 {
     /**
-     * @return array{groupDays:?bool, hideClosedDays:bool, hideWeekends:bool, timeFormat:?string}
+     * @return array{groupDays:?bool, hideClosedDays:bool, hideWeekends:bool, timeFormat:?string, weekdayFormat:?string}
      */
     public static function parse(KirbyTag $tag): array
     {
@@ -43,6 +43,20 @@ final class TagOptionsParser
             }
         }
 
+        // BusinessHoursListOptions only accepts 'D' (short) or 'l' (long)
+        // and silently falls back to 'D' for anything else — accept a few
+        // friendly synonyms here so a typo/wrong case doesn't quietly
+        // produce the opposite of what was asked for.
+        $weekdayFormat = null;
+        if ($tag->weekdayformat !== null) {
+            $wf = strtolower(trim((string)$tag->weekdayformat));
+            if (in_array($wf, ['l', 'long', 'full'], true)) {
+                $weekdayFormat = 'l';
+            } elseif (in_array($wf, ['d', 'short'], true)) {
+                $weekdayFormat = 'D';
+            }
+        }
+
         // BusinessHoursListOptions consumes "hideClosedDays"/"hideWeekends"
         // (inverse of the tag's user-facing "showClosed"/"showWeekends").
         return [
@@ -50,6 +64,7 @@ final class TagOptionsParser
             'hideClosedDays' => !$showClosed,
             'hideWeekends' => !$showWeekends,
             'timeFormat' => $timeFormat,
+            'weekdayFormat' => $weekdayFormat,
         ];
     }
 }

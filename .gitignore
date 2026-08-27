@@ -4,3 +4,6 @@ kirby/
 *.log
 composer.lock
 package-lock.json
+.DS_Store
+.phpunit.result.cache
+*.iml

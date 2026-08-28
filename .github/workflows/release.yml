@@ -49,6 +49,47 @@ jobs:
             --exclude "vendor/bin/*"
 
       - name: Release
+        id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: |
+          npx semantic-release
+          echo "new_release_git_tag=$(git describe --tags --exact-match 2>/dev/null || true)" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger registry rebuild
+        if: steps.semantic-release.outputs.new_release_git_tag != ''
+        run: |
+          curl -sSL -f -X POST \
+            -H "Authorization: Bearer ${{ secrets.CLONE_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/gearsdigital/satis-registry/dispatches \
+            -d '{"event_type":"package-release","client_payload":{"tag":"${{ steps.semantic-release.outputs.new_release_git_tag }}"}}'
+
+      - name: Bump pro plugin's dependency and trigger its release
+        if: steps.semantic-release.outputs.new_release_git_tag != ''
+        env:
+          TAG: ${{ steps.semantic-release.outputs.new_release_git_tag }}
+          GH_TOKEN: ${{ secrets.CLONE_TOKEN }}
+        run: |
+          REPO=gearsdigital/we-are-open-pro
+          FILE=.we-are-open-version
+
+          SHA=$(curl -sSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/contents/$FILE" | jq -r '.sha // empty')
+
+          BODY=$(jq -n --arg msg "chore(deps): bump we-are-open to $TAG" \
+            --arg content "$(printf '%s' "$TAG" | base64)" \
+            --arg sha "$SHA" \
+            '{message:$msg, content:$content, branch:"main"} + (if $sha != "" then {sha:$sha} else {} end)')
+
+          curl -sSL -f -X PUT \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/contents/$FILE" \
+            -d "$BODY"
+
+          curl -sSL -f -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/actions/workflows/release.yml/dispatches" \
+            -d '{"ref":"main"}'

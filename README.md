@@ -249,36 +249,22 @@ For localised names that respect the site language, `$day->label` already contai
 
 ## We Are Open PRO
 
-Free covers most single-location schedules well. **We Are Open PRO** is for
-the cases that don't fit a single time slot per day: lunch breaks, split
-shifts, seasonal closures, and public holidays that shouldn't need a yearly
-reminder.
+Free covers most single-location schedules. **We Are Open PRO** is for businesses whose opening hours don't fit into one simple time slot per day, from lunch breaks and split shifts to seasonal closures and public holidays.
 
-- **Multiple time slots per day** – split a day into two or more open
-  windows, e.g. 9:00–12:00 and 14:00–18:00 for a lunch break, instead of one
-  continuous slot.
-- **Exception days** – override the regular schedule for a single date: a
-  training day, a spontaneous closure, a one-off late opening.
-- **Exception day ranges** – the same override, spanning a start and end
-  date: company holidays, renovations, seasonal closures.
-- **Public holiday detection** – pick a country and public holidays are
-  added automatically, kept up to date every year. Any holiday can still
-  get its own hours if you're open anyway.
-- **`(openNote:)` KirbyTag** – a short, self-updating status line (open,
-  closed, or opening soon) for headers, banners, or a contact page.
-- **Grouped days with identical hours** – "Mon–Fri 8:00–17:00" instead of
-  five separate rows, wherever consecutive days share the same schedule.
-- **Extended `scheduleTable` options** – more control over the rendered
-  table beyond the Free set.
+With Pro, you can model your actual schedule instead of working around the limitations of a simple weekly timetable:
 
-**For snippet authors**, Pro's `we-are-open/business-hours-table` snippet
-also gets:
+- **Multiple time slots per day**: Define two or more opening windows for the same day, such as `09:00–12:00` and `14:00–18:00`, without having to fake a continuous opening period.
+- **Exception days**: Override your regular schedule for a specific date, whether it's a training day, a one-off late opening, or a spontaneous closure.
+- **Exception day ranges**: Apply an exception across multiple dates for company holidays, renovations, seasonal closures, and other longer periods.
+- **Automatic public holiday detection**: Select a country and public holidays are added automatically and kept up to date year after year. If you're open on a holiday, simply define custom hours for that date.
+- **`(openNote:)` KirbyTag**: Display a short, automatically updated status such as *open*, *closed*, or *opening soon* in headers, banners, contact pages, and other places.
+- **Grouped days with identical hours**: Turn five identical rows into a concise `Mon–Fri 08:00–17:00` entry for a cleaner schedule.
+- **Extended `scheduleTable` options**: Get more control over the rendered schedule table than the Free version provides.
 
-- **`$rawData`** – the underlying model behind `$tableData`, for building a
-  fully custom rendering beyond what `BusinessHoursDay` exposes.
-- **`$day->isClosed` / `$day->isWeekend`** – Free snippets derive "closed"
-  from empty slots themselves; Pro's `BusinessHoursDay` carries both flags
-  directly.
+**For snippet authors**, Pro's `we-are-open/business-hours-table` snippet also gets:
+
+- **`$rawData`**: Access the underlying model behind `$tableData` and build completely custom output beyond what `BusinessHoursDay` exposes.
+- **`$day->isClosed` / `$day->isWeekend`**: Get both states directly from `BusinessHoursDay` instead of deriving `closed` from empty slots yourself.
 
 | Feature | Free | Pro |
 |---------|:----:|:---:|
@@ -293,9 +279,9 @@ also gets:
 | `(openNote:)` KirbyTag | – | ✅ |
 | Extended `scheduleTable` options | – | ✅ |
 
-Every feature above is ready to use today – multiple slots, exceptions,
-holidays, the lot. It's just not on Packagist yet: email
-[plugins@gearsdigital.com](mailto:plugins@gearsdigital.com) to get it.
+We Are Open PRO is already fully implemented and ready to use. Multiple time slots, exceptions, public holidays, grouped days, and every other Pro feature listed above work today. The only thing missing is its Packagist release.
+
+We Are Open PRO is a paid add-on. A license is required to use the Pro features. Pricing and licensing details are available on request: email [plugins@gearsdigital.com](mailto:plugins@gearsdigital.com) to get access.
 
 ## Development
 

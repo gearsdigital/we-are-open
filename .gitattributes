@@ -1,0 +1,21 @@
+# JS Build Sources
+/src              export-ignore
+
+# Tests & Docs
+/tests            export-ignore
+/.github          export-ignore
+
+# Build Config
+package.json      export-ignore
+package-lock.json export-ignore
+composer.lock     export-ignore
+
+# Release/CI tooling
+.releaserc.json       export-ignore
+commitlint.config.js  export-ignore
+
+# Dev
+phpunit.xml       export-ignore
+*.iml             export-ignore
+.gitattributes    export-ignore
+.gitignore        export-ignore

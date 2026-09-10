@@ -45,8 +45,22 @@ return [
     'gearsdigital.we-are-open.defaultStartTime' => '08:00:00',
     'gearsdigital.we-are-open.defaultEndTime'   => '17:00:00',
     'gearsdigital.we-are-open.timezone'         => 'Europe/Berlin',
+    'gearsdigital.we-are-open.locale'           => 'de_DE',
 ];
 ```
+
+`timezone` and `locale` are applied by `site()->weAreOpen()->businessHours()`.
+
+The locale used for weekday names is resolved in this order:
+
+1. `gearsdigital.we-are-open.locale` (above)
+2. the active Kirby language, on multi-language sites
+3. Kirby's site-wide `locale` config option (charset suffix such as `.UTF-8` is
+   stripped; array form keyed by `LC_*` constants is supported)
+4. `en` as a last resort
+
+So on a single-language site with none of the above set, weekday names render
+in English.
 
 ## Documentation
 

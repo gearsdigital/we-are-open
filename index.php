@@ -23,7 +23,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
     'areas' => [
         'we-are-open' => function () {
             return [
-                'label' => 'Öffnungszeiten',
+                'label' => t('we-are-open.title'),
                 'icon' => 'clock',
                 'menu' => true,
                 'link' => 'we-are-open',
@@ -36,7 +36,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
 
                             return [
                                 'component' => 'k-we-are-open-view',
-                                'title' => 'Öffnungszeiten',
+                                'title' => t('we-are-open.title'),
                                 'props' => [
                                     'openHours' => Api::normalizeOpenHours(SiteYamlReader::get(SiteYamlKeys::OPENHOURS)),
                                     'defaultStartTime' => $defaultStartTime,

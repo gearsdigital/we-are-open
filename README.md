@@ -293,6 +293,23 @@ npm run dev
 npm run build
 ```
 
+### Releases
+
+Releases are cut by running the **Release** GitHub Action (`workflow_dispatch`),
+which runs [semantic-release](https://semantic-release.gitbook.io/) against the
+selected branch.
+
+- **Stable:** dispatch on `main`. Publishes a normal release and cascades to the
+  Satis registry and the Pro plugin.
+- **Beta / pre-release:** push the commits to a `beta` branch and dispatch the
+  workflow on it. semantic-release publishes a GitHub pre-release tagged
+  `vX.Y.Z-beta.N`, which reaches the Satis registry (so it is installable for
+  testing) but does **not** cascade to the Pro plugin.
+
+```bash
+composer require gearsdigital/we-are-open:^1.4.0-beta@beta
+```
+
 ## License
 
 [MIT](LICENSE)

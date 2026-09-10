@@ -58,6 +58,8 @@ jobs:
           npx semantic-release
           echo "new_release_git_tag=$(git describe --tags --exact-match 2>/dev/null || true)" >> "$GITHUB_OUTPUT"
 
+      # Runs for pre-releases too, so a `beta` tag is installable via
+      # `composer require gearsdigital/we-are-open:^1.4.0-beta` for testing.
       - name: Trigger registry rebuild
         if: steps.semantic-release.outputs.new_release_git_tag != ''
         run: |
@@ -67,8 +69,10 @@ jobs:
             https://api.github.com/repos/gearsdigital/satis-registry/dispatches \
             -d '{"event_type":"package-release","client_payload":{"tag":"${{ steps.semantic-release.outputs.new_release_git_tag }}"}}'
 
+      # Stable releases only — a pre-release tag (contains a hyphen, e.g.
+      # v1.4.0-beta.1) must not cascade into the pro plugin.
       - name: Bump pro plugin's dependency and trigger its release
-        if: steps.semantic-release.outputs.new_release_git_tag != ''
+        if: steps.semantic-release.outputs.new_release_git_tag != '' && !contains(steps.semantic-release.outputs.new_release_git_tag, '-')
         env:
           TAG: ${{ steps.semantic-release.outputs.new_release_git_tag }}
           GH_TOKEN: ${{ secrets.CLONE_TOKEN }}

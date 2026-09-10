@@ -1,0 +1,52 @@
+name: Promote beta to stable
+
+# Fast-forwards `main` to `beta` and kicks off the stable Release workflow.
+# Run this once the current beta pre-releases have been tested and are good.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    name: Fast-forward main and release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+          # Needs push access to a protected `main`; GITHUB_TOKEN can't do that.
+          token: ${{ secrets.CLONE_TOKEN }}
+
+      - name: Fast-forward main to beta
+        id: ff
+        run: |
+          git fetch origin beta:beta
+
+          if git merge-base --is-ancestor beta HEAD; then
+            echo "::notice::main is already up to date with beta — nothing to promote."
+            echo "promoted=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if ! git merge-base --is-ancestor HEAD beta; then
+            echo "::error::main has commits that are not on beta — fast-forward is not possible. Reconcile the branches manually."
+            exit 1
+          fi
+
+          git merge --ff-only beta
+          git push origin main
+          echo "promoted=true" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger stable release on main
+        if: steps.ff.outputs.promoted == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CLONE_TOKEN }}
+        run: gh workflow run release.yml --ref main

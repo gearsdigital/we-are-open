@@ -310,6 +310,15 @@ selected branch.
 composer require gearsdigital/we-are-open:^1.4.0-beta@beta
 ```
 
+`beta` is a long-lived branch off `main`. Merge changes into `beta` first,
+cut as many `-beta.N` pre-releases as needed, then promote:
+
+- Run the **Promote beta to stable** GitHub Action (`workflow_dispatch`). It
+  fast-forwards `main` to `beta` and triggers the stable **Release** run for you.
+- It refuses to run if `main` has commits that are not on `beta` (fast-forward
+  not possible) — reconcile the branches by hand in that case.
+- Requires a `CLONE_TOKEN` secret that is allowed to push to `main`.
+
 ## License
 
 [MIT](LICENSE)

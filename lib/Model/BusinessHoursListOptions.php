@@ -51,17 +51,23 @@ final readonly class BusinessHoursListOptions
             $weekdayFormat = 'D';
         }
 
-        // Locale auto-detection (best-effort). Works even when used outside Kirby.
+        // Locale resolution (best-effort, also works outside Kirby):
+        //   1. explicit 'locale' option passed to the service
+        //   2. the active Kirby language (multi-language sites)
+        //   3. Kirby's site-wide `locale` config option (single-language sites
+        //      have no kirby()->language(), so this is their way in)
+        //   4. 'en' — a plain, predictable default; a hardcoded 'de_DE' used to
+        //      silently render every weekday name in German here.
         $locale = $options['locale'] ?? null;
         if (!is_string($locale) || $locale === '') {
             try {
                 $lang = function_exists('kirby') ? kirby()->language() : null;
-                $locale = $lang?->locale(LC_TIME) ?: $lang?->code();
+                $locale = $lang?->locale(LC_TIME) ?: $lang?->code() ?: self::kirbyConfigLocale();
             } catch (Throwable) {
                 $locale = null;
             }
         }
-        $locale = is_string($locale) && $locale !== '' ? $locale : 'de_DE';
+        $locale = is_string($locale) && $locale !== '' ? $locale : 'en';
 
         // Timezone fallback.
         $timezone = $options['timezone'] ?? null;
@@ -85,5 +91,28 @@ final readonly class BusinessHoursListOptions
             groupMinSize: $groupMinSize,
             groupDaySeparator: $groupDaySeparator,
         );
+    }
+
+    /**
+     * Kirby's site-wide `locale` config option, normalized to an intl locale id.
+     *
+     * The option may be a plain string ('de_DE.UTF-8') or an array keyed by
+     * LC_* constants; either way the charset suffix is dropped.
+     */
+    private static function kirbyConfigLocale(): ?string
+    {
+        if (!function_exists('kirby')) {
+            return null;
+        }
+
+        $locale = kirby()->option('locale');
+        if (is_array($locale)) {
+            $locale = $locale[LC_TIME] ?? $locale[LC_ALL] ?? null;
+        }
+        if (!is_string($locale) || $locale === '') {
+            return null;
+        }
+
+        return strstr($locale, '.', true) ?: $locale; // "de_DE.UTF-8" -> "de_DE"
     }
 }

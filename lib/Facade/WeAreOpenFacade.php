@@ -59,9 +59,17 @@ final readonly class WeAreOpenFacade
         // Match the documented contract (README: "one per weekday, Mon–Sun",
         // `$day->label` e.g. "Monday") rather than BusinessHoursListService's
         // own defaults, which are tuned for the (scheduleTable:) tag instead.
+        // Forward project config so a single-language site can pick a locale
+        // and timezone without dropping down to BusinessHoursListService.
+        // Unset options stay out of the array so the service's own
+        // auto-detection / fallbacks still apply.
         return BusinessHoursListService::build($openhours, [
             'hideWeekends' => false,
             'weekdayFormat' => 'l',
+            ...array_filter([
+                'locale' => option('gearsdigital.we-are-open.locale'),
+                'timezone' => option('gearsdigital.we-are-open.timezone'),
+            ], fn ($value) => $value !== null),
         ]);
     }
 }

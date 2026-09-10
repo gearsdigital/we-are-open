@@ -36,11 +36,22 @@ final class WeAreOpenFacadeTest extends \KirbyTestCase
         $facade = $this->facadeWith($this->standardOpenHoursModel());
         $days = $facade->businessHours();
 
-        // Long form ("Montag"), not short ("Mo."/BusinessHoursListService's
-        // own default weekdayFormat 'D'). Locale/language comes from site
-        // config (defaults to de_DE with no language configured, per
-        // BusinessHoursListOptions::fromArray) — the point of this test is
+        // Long form ("Monday"), not short ("Mon"/BusinessHoursListService's
+        // own default weekdayFormat 'D'). With no site language and no
+        // configured locale the fallback is locale-neutral English, per
+        // BusinessHoursListOptions::fromArray — the point of this test is
         // the format, not the language.
+        $this->assertSame('Monday', $days[0]->label);
+    }
+
+    public function test_weekday_labels_honor_configured_locale(): void
+    {
+        \Kirby\Cms\App::instance($this->kirbyWithContent(['openhours' => $this->yaml($this->standardOpenHoursModel())])->clone([
+            'options' => ['gearsdigital.we-are-open.locale' => 'de_DE'],
+        ]));
+
+        $days = (new WeAreOpenFacade())->businessHours();
+
         $this->assertSame('Montag', $days[0]->label);
     }
 }

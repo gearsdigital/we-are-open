@@ -75,7 +75,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
         'routes' => [
             [
                 'pattern' => 'we-are-open/save',
-                'method' => 'POST',
+                'method' => 'PATCH',
                 'action' => function () {
                     // Check if PRO version is available
                     $proApiClass = 'GearsDigital\\WeAreOpenPro\\Support\\Api';

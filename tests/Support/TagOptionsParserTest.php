@@ -137,4 +137,25 @@ final class TagOptionsParserTest extends \KirbyTestCase
 
         $this->assertNull($options['weekdayFormat']);
     }
+
+    public function test_locale_and_timezone_config_options_are_passed_through(): void
+    {
+        \Kirby\Cms\App::instance()->clone(['options' => [
+            'gearsdigital.we-are-open.locale' => 'fr_FR',
+            'gearsdigital.we-are-open.timezone' => 'Europe/Paris',
+        ]]);
+
+        $options = TagOptionsParser::parse($this->parseTag('(scheduleTable:)'));
+
+        $this->assertSame('fr_FR', $options['locale']);
+        $this->assertSame('Europe/Paris', $options['timezone']);
+    }
+
+    public function test_locale_and_timezone_keys_are_absent_when_not_configured(): void
+    {
+        $options = TagOptionsParser::parse($this->parseTag('(scheduleTable:)'));
+
+        $this->assertArrayNotHasKey('locale', $options);
+        $this->assertArrayNotHasKey('timezone', $options);
+    }
 }

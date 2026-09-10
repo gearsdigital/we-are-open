@@ -10,7 +10,7 @@ use Kirby\Text\KirbyTag;
 final class TagOptionsParser
 {
     /**
-     * @return array{groupDays:?bool, hideClosedDays:bool, hideWeekends:bool, timeFormat:?string, weekdayFormat:?string}
+     * @return array{groupDays:?bool, hideClosedDays:bool, hideWeekends:bool, timeFormat:?string, weekdayFormat:?string, locale?:string, timezone?:string}
      */
     public static function parse(KirbyTag $tag): array
     {
@@ -58,12 +58,24 @@ final class TagOptionsParser
 
         // BusinessHoursListOptions consumes "hideClosedDays"/"hideWeekends"
         // (inverse of the tag's user-facing "showClosed"/"showWeekends").
-        return [
+        $options = [
             'groupDays' => $groupDays,
             'hideClosedDays' => !$showClosed,
             'hideWeekends' => !$showWeekends,
             'timeFormat' => $timeFormat,
             'weekdayFormat' => $weekdayFormat,
         ];
+
+        // Honor the same project config that WeAreOpenFacade::businessHours()
+        // reads. Only pass keys that are actually set, so BusinessHoursListOptions'
+        // own locale/timezone auto-detection still applies otherwise.
+        foreach (['locale', 'timezone'] as $configKey) {
+            $value = option("gearsdigital.we-are-open.$configKey");
+            if ($value !== null) {
+                $options[$configKey] = $value;
+            }
+        }
+
+        return $options;
     }
 }

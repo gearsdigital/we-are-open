@@ -49,7 +49,8 @@ return [
 ];
 ```
 
-`timezone` and `locale` are applied by `site()->weAreOpen()->businessHours()`.
+`timezone` and `locale` are applied by both `site()->weAreOpen()->businessHours()`
+and the `(scheduleTable:)` tag.
 
 The locale used for weekday names is resolved in this order:
 

@@ -150,7 +150,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.validationError' => 'Bitte beheben Sie alle Fehler (Überlappungen und ungültige Zeiten) vor dem Speichern.',
 
             'we-are-open.proTeaserTitle' => "We're open PRO",
-            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – unbegrenzt viele Zeiträume, flexible Sonderöffnungszeiten und automatische berücksichtigung von Feiertagen in den Öffnungszeiten. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Mehr erfahren…</a>',
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – unbegrenzt viele Zeiträume, flexible Sonderöffnungszeiten, automatische Berücksichtigung von Feiertagen und SEO-freundliches JSON-LD für Ihre Öffnungszeiten. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Mehr erfahren…</a>',
         ],
 
         'en' => [
@@ -179,7 +179,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.validationError' => 'Please resolve all errors (overlaps and invalid times) before saving.',
 
             'we-are-open.proTeaserTitle' => "We're open PRO",
-            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« — unlimited time slots per day, flexible exception days, and automatic public holiday support. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Learn more…</a>',
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« — unlimited time slots per day, flexible exception days, automatic public holiday support, and SEO-friendly JSON-LD markup for your opening hours. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Learn more…</a>',
         ],
 
         'fr' => [
@@ -208,7 +208,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.validationError' => 'Veuillez corriger toutes les erreurs (chevauchements et horaires invalides) avant d\'enregistrer.',
 
             'we-are-open.proTeaserTitle' => "We're open PRO",
-            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – créneaux horaires illimités, horaires exceptionnels flexibles et prise en compte automatique des jours fériés. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">En savoir plus…</a>',
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – créneaux horaires illimités, horaires exceptionnels flexibles, prise en compte automatique des jours fériés et balisage JSON-LD optimisé pour le référencement (SEO). <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">En savoir plus…</a>',
         ],
 
         'pl' => [
@@ -237,7 +237,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.validationError' => 'Przed zapisaniem popraw wszystkie błędy (nakładające się przedziały i nieprawidłowe godziny).',
 
             'we-are-open.proTeaserTitle' => "We're open PRO",
-            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – nieograniczona liczba przedziałów czasowych, elastyczne dni wyjątkowe oraz automatyczne uwzględnianie dni świątecznych. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Dowiedz się więcej…</a>',
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – nieograniczona liczba przedziałów czasowych, elastyczne dni wyjątkowe, automatyczne uwzględnianie dni świątecznych oraz przyjazne dla SEO znaczniki JSON-LD dla godzin otwarcia. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Dowiedz się więcej…</a>',
         ],
 
         'cs' => [
@@ -266,7 +266,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.validationError' => 'Před uložením prosím opravte všechny chyby (překryvy a neplatné časy).',
 
             'we-are-open.proTeaserTitle' => "We're open PRO",
-            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – neomezený počet časových úseků, flexibilní výjimečné otevírací doby a automatické zohlednění státních svátků. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Zjistit více…</a>',
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – neomezený počet časových úseků, flexibilní výjimečné otevírací doby, automatické zohlednění státních svátků a SEO přívětivé JSON-LD značení otevírací doby. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Zjistit více…</a>',
         ],
 
         'nl' => [
@@ -295,7 +295,7 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.messages.validationError' => 'Los alle fouten op (overlappingen en ongeldige tijden) voordat u opslaat.',
 
             'we-are-open.proTeaserTitle' => "We're open PRO",
-            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – onbeperkt aantal tijdsblokken, flexibele uitzonderingsdagen en automatische verwerking van feestdagen. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Meer informatie…</a>',
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – onbeperkt aantal tijdsblokken, flexibele uitzonderingsdagen, automatische verwerking van feestdagen en SEO-vriendelijke JSON-LD-markering voor uw openingstijden. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Meer informatie…</a>',
         ],
     ],
 ]);

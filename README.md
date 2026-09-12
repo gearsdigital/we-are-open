@@ -275,6 +275,7 @@ With Pro, you can model your actual schedule instead of working around the limit
 - **`(openNote:)` KirbyTag**: Display a short, automatically updated status such as *open*, *closed*, or *opening soon* in headers, banners, contact pages, and other places.
 - **Grouped days with identical hours**: Turn five identical rows into a concise `Mon–Fri 08:00–17:00` entry for a cleaner schedule.
 - **Extended `scheduleTable` options**: Get more control over the rendered schedule table than the Free version provides.
+- **JSON-LD opening hours**: Publish your schedule as schema.org structured data so search engines can show it directly in search results.
 
 **For snippet authors**, Pro's `we-are-open/business-hours-table` snippet also gets:
 
@@ -293,6 +294,7 @@ With Pro, you can model your actual schedule instead of working around the limit
 | Public holiday detection | – | ✅ |
 | `(openNote:)` KirbyTag | – | ✅ |
 | Extended `scheduleTable` options | – | ✅ |
+| JSON-LD opening hours | – | ✅ |
 
 We Are Open PRO is already fully implemented and ready to use. Multiple time slots, exceptions, public holidays, grouped days, and every other Pro feature listed above work today. The only thing missing is its Packagist release.
 

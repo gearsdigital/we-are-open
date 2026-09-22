@@ -50,6 +50,7 @@ export default {
   async created() {
     const response = await this.load();
     this.label = response.label;
+    this.isPro = response.isPro === true;
     this.defaultStartTime = response.defaultStartTime;
     this.defaultEndTime = response.defaultEndTime;
     this.initOpenHours(response.openHours);

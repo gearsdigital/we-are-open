@@ -95,9 +95,7 @@ final class WeekdayTest extends TestCase
         $this->assertFalse($mon->isConsecutiveTo($wed));
     }
 
-    /**
-     * @dataProvider validWeekdayCodesProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('validWeekdayCodesProvider')]
     public function test_all_valid_codes_are_accepted(string $code): void
     {
         $wd = Weekday::fromString($code);

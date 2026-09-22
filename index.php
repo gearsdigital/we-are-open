@@ -58,8 +58,15 @@ Kirby::plugin('gearsdigital/we-are-open', [
                 },
             ],
             'computed' => [
+                'isPro' => function () {
+                    return class_exists('GearsDigital\\WeAreOpenPro\\Support\\Api');
+                },
                 'openHours' => function () {
-                    return Api::normalizeOpenHours(SiteYamlReader::get(SiteYamlKeys::OPENHOURS));
+                    $hours = SiteYamlReader::get(SiteYamlKeys::OPENHOURS);
+
+                    return class_exists('GearsDigital\\WeAreOpenPro\\Support\\Api')
+                        ? $hours
+                        : Api::normalizeOpenHours($hours);
                 },
                 'defaultStartTime' => function () {
                     return option('gearsdigital.we-are-open.defaultStartTime', '08:00:00');

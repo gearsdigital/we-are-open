@@ -65,4 +65,14 @@ final class SectionTest extends \KirbyTestCase
         $section = $this->section([]);
         $this->assertSame([], $section->toArray()['openHours']);
     }
+
+    public function test_free_section_limits_slots_and_reports_free_mode(): void
+    {
+        $model = $this->standardOpenHoursModel();
+        $model[0]['slots'][] = ['start' => '18:00:00', 'end' => '20:00:00'];
+        $data = $this->section($model)->toArray();
+
+        $this->assertFalse($data['isPro']);
+        $this->assertCount(1, $data['openHours'][0]['slots']);
+    }
 }

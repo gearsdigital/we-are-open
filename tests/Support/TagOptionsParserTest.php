@@ -96,9 +96,7 @@ final class TagOptionsParserTest extends \KirbyTestCase
         $this->assertFalse($options['hideWeekends']);
     }
 
-    /**
-     * @dataProvider validWeekdayFormats
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('validWeekdayFormats')]
     public function test_weekday_format_accepts_php_date_weekday_characters(string $value): void
     {
         $tag = $this->parseTag("(scheduleTable: weekdayFormat: {$value})");

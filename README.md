@@ -40,7 +40,7 @@ Download and copy this repository to `/site/plugins/we-are-open`.
 ## Configuration
 
 ```php
-// config/config.php
+// site/config/config.php
 return [
     'gearsdigital.we-are-open.defaultStartTime' => '08:00:00',
     'gearsdigital.we-are-open.defaultEndTime'   => '17:00:00',

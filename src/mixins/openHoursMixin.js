@@ -151,7 +151,7 @@ export default {
 
         return {
           date: day.date || "",
-          dateEnd: day.dateEnd || "",
+          ...(day.dateEnd ? { dateEnd: day.dateEnd } : {}),
           slots,
           reason: day.reason || "",
           isActive: day.isActive !== false,

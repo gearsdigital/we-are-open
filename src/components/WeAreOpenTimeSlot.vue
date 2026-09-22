@@ -6,7 +6,7 @@
       :label="null"
       :disabled="disabled"
     />
-    <span class="k-we-are-open-separator"> bis </span>
+    <span class="k-we-are-open-separator">–</span>
     <k-time-field
       v-model="localEnd"
       name="time"

@@ -27,3 +27,10 @@ jobs:
 
       - name: Run tests
         run: ./vendor/bin/phpunit
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Test Panel data normalization
+        run: node --test tests/panel/*.test.js

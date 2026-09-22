@@ -4,7 +4,17 @@
     { "name": "beta", "prerelease": true }
   ],
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "releaseRules": [
+          {
+            "hash": "d591232ffea6337def3632fb89c7e74078055ef5",
+            "release": false
+          }
+        ]
+      }
+    ],
     "@semantic-release/release-notes-generator",
     [
       "@semantic-release/github",

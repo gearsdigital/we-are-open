@@ -297,5 +297,34 @@ Kirby::plugin('gearsdigital/we-are-open', [
             'we-are-open.proTeaserTitle' => "We're open PRO",
             'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – onbeperkt aantal tijdsblokken, flexibele uitzonderingsdagen, automatische verwerking van feestdagen en SEO-vriendelijke JSON-LD-markering voor uw openingstijden. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Meer informatie…</a>',
         ],
+
+        'fi' => [
+            'we-are-open.title' => 'Aukioloajat',
+
+            'we-are-open.openHours.title' => 'Säännölliset aukioloajat',
+            'we-are-open.openHours.subtitle' => 'Määritä aukioloajat kullekin viikonpäivälle. Päivää kohti voidaan määrittää <b>yksi aikaväli</b>. Päivät ilman merkintää katsotaan automaattisesti suljetuiksi.',
+            'we-are-open.openHours.closed' => 'Suljettu',
+            'we-are-open.openHours.addSlot' => 'Lisää aikaväli',
+            'we-are-open.openHours.removeSlot' => 'Poista aikaväli',
+            'we-are-open.openHours.overlap' => 'Päällekkäisyys',
+            'we-are-open.openHours.overlapError' => 'Aikavälit menevät päällekkäin',
+            'we-are-open.openHours.invalidTimeError' => 'Alkamisajan tulee olla ennen päättymisaikaa',
+
+            'we-are-open.weekdays.mon' => 'Maanantai',
+            'we-are-open.weekdays.tue' => 'Tiistai',
+            'we-are-open.weekdays.wed' => 'Keskiviikko',
+            'we-are-open.weekdays.thu' => 'Torstai',
+            'we-are-open.weekdays.fri' => 'Perjantai',
+            'we-are-open.weekdays.sat' => 'Lauantai',
+            'we-are-open.weekdays.sun' => 'Sunnuntai',
+
+            'we-are-open.messages.saved' => 'Tallennettu',
+            'we-are-open.messages.errorSaving' => 'Virhe tallennettaessa',
+            'we-are-open.messages.overlapError' => 'Korjaa päällekkäisyydet ennen tallentamista.',
+            'we-are-open.messages.validationError' => 'Korjaa kaikki virheet (päällekkäisyydet ja virheelliset ajat) ennen tallentamista.',
+
+            'we-are-open.proTeaserTitle' => "We're open PRO",
+            'we-are-open.proTeaserText' => '»We Are Open <strong>PRO</strong>« – rajattomasti aikavälejä, joustavat poikkeusaukioloajat, pyhäpäivien automaattinen huomiointi ja hakukoneystävällinen JSON-LD-merkintä aukioloajoillesi. <a href="https://github.com/gearsdigital/we-are-open#we-are-open-pro" target="_blank" rel="noopener">Lue lisää…</a>',
+        ],
     ],
 ]);
